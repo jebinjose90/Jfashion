@@ -1,0 +1,89 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="/home">
+        <img src="/img/company_logo.png" alt="Your Logo" height="50">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <form action="/productsByCondition" method="GET" class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" id="search" name="search" placeholder="Search"
+                aria-label="Search">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"
+                formaction="/productsByCondition?search=">Search</button>
+        </form>
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    Category
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" style=" width: 60px; left: auto;" href="#">MEN</a>
+                    <a class="dropdown-item" style=" width: 60px; left: auto;" href="#">WOMEN</a>
+                    <a class="dropdown-item" style=" width: 60px; left: auto;" href="#">KIDS</a>
+                    <a class="dropdown-item" style=" width: 60px; left: auto;" href="#">BEAUTY</a>
+                </div>
+            </li>
+            <% if (userDetails) { %>
+                <li class="nav-item">
+                    <a class="nav-link" href="/wishlistByCondition">Wishlist</a>
+                </li>
+                <% } %>
+                    <!-- Your other HTML content goes here -->
+                    <% if (userDetails) { %>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <%= userDetails.username.toUpperCase() %>
+                            </a>
+                            <div class="dropdown-menu" style=" width: 60px; left: auto;"
+                                aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" style=" font-size: 80%;" href="/userAddress"
+                                    id="accountButton">Address</a>
+                                <a class="dropdown-item" style=" font-size: 80%;" href="/userOrders"
+                                    id="accountButton">Orders</a>
+                                <a class="dropdown-item" style=" font-size: 80%;" href="/userWallet"
+                                    id="accountButton">Wallet</a>
+                                <a class="dropdown-item" style=" font-size: 80%;" href="/changePassword"
+                                    id="accountButton">Change Password</a>
+                                <a class="dropdown-item" style=" font-size: 80%;" href="/logout" onclick="logout()"
+                                    id="logoutButton">Logout</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/userProfile" id="accountButton">Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <span id="group">
+                                <% if (cartQuantity <=0) { %>
+                                    <button class="btn btn-link" type="button" disabled>
+                                        <img src="/img/cart-alt-regular-240.png" alt="Cart Icon"
+                                            style="width: 25px; height: 25px;">
+                                    </button>
+                                    <% } else { %>
+                                        <a href="/cart">
+                                            <button class="btn btn-link" type="button">
+                                                <img src="/img/cart-alt-regular-240.png" alt="Cart Icon"
+                                                    style="width: 25px; height: 25px;">
+                                            </button>
+                                            <span class="badge badge-light" id="badgeCount">
+                                                <%= cartQuantity %>
+                                            </span>
+                                        </a>
+                                        <% } %>
+                            </span>
+                        </li>
+                        <% }else{%>
+                            <li class="nav-item">
+                                <a href="/login">
+                                    <button class="btn btn-dark">SIGN UP</button>
+                                </a>
+                            </li>
+                            <%}%>
+        </ul>
+    </div>
+</nav>

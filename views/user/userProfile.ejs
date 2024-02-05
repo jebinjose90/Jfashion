@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/user_side_view.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <style>
+    .custom-height {
+      height: 80vh;
+      /* 80% of the viewport height */
+    }
+  </style>
+  <title>
+    <%= title %>
+  </title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+
+    .inner-border-black {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+      border: 0.5px solid black;
+    }
+
+    .inner-border {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+    }
+
+    .user-avatar {
+      height: 10rem;
+      width: 10rem;
+      min-height: 10rem;
+      min-width: 10rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      border-radius: 50%;
+    }
+  </style>
+<%- include('include/nav_bar_main_style') %>
+</head>
+
+<body>
+  <%- include('include/nav_bar_main') %>
+
+
+    <div class="custom-div p-5">
+      <!-- Profile section -->
+      <div class="row mb-3">
+        <div class="col-md-12">
+          <h1>PROFILE</h1>
+        </div>
+      </div>
+
+      <!-- Two additional divs -->
+      <div class="row justify-content-center">
+        <!-- First div with 60% width, 5px gap, and .5px gray border -->
+        <div class="col-md-7 mb-3 custom-height position-relative">
+          <!-- Inner div for black border inside -->
+          <div class="inner-border-black">
+            <div class="inner-border">
+              <h4 style="margin-bottom: 20px;">PROFILE INFORMATION</h4>
+              <div class="row">
+                <!-- First set on the left side -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inputText1" style="font-size: 70%;">USERNAME</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.username ? userDetail.username : '➖' %>"
+                      value="<%= userDetail.username %>" style="font-size: 75%; background-color: white;"
+                      name="username" disabled>
+                  </div>
+                </div>
+                <!-- Second set on the right side -->
+                <div class="col-md-6">
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="inputText1" style="font-size: 70%;">EMAIL</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.email ? userDetail.email : '➖' %>" value="<%= userDetail.email %>"
+                      style="font-size: 75%; background-color: white;" name="email" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- First set on the left side -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inputText1" style="font-size: 70%;">FIRST NAME</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.firstName ? userDetail.firstName : '➖' %>"
+                      value="<%= userDetail.firstName %>" style="font-size: 75%; background-color: white;"
+                      name="firstName" disabled>
+                  </div>
+                </div>
+                <!-- Second set on the right side -->
+                <div class="col-md-6">
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="inputText1" style="font-size: 70%;">LAST NAME</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.lastName ? userDetail.lastName : '➖' %>"
+                      value="<%= userDetail.lastName %>" style="font-size: 75%; background-color: white;"
+                      name="lastName" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- First set on the left side -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="inputText1" style="font-size: 70%;">GENDER</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.gender ? userDetail.gender : '➖' %>"
+                      value="<%= userDetail.gender %>" style="font-size: 75%; background-color: white;" name="gender"
+                      disabled>
+                  </div>
+                </div>
+                <!-- Second set on the right side -->
+                <div class="col-md-6">
+                  <div class="form-group mt-3 mt-md-0">
+                    <label for="inputText1" style="font-size: 70%;">PHONE NUMBER</label>
+                    <input type="text" class="form-control mb-4 rounded-0"
+                      placeholder="<%= userDetail.phoneNumber ? userDetail.phoneNumber : '➖' %>"
+                      value="<%= userDetail.phoneNumber %>" style="font-size: 75%; background-color: white;"
+                      name="phone number" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <!-- First set on the left side -->
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <a href="/editProfile">
+                      <button class="btn btn-primary w-30 rounded-0" style="background-color: #6badeb;">EDIT</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Second div with 30% width, 5px gap, and .5px gray border -->
+        <div class="col-md-3 mb-3 custom-height position-relative">
+          <!-- Inner div for black border inside -->
+          <div class="inner-border-black d-flex flex-column align-items-center justify-content-center">
+            <div class="inner-border pb-5 text-center">
+              <img src="<%= userDetail.image ? userDetail.image : 'img/user-solid-240.png' %>"
+                class="user-avatar large-avatar rounded-circle mx-auto mt-n7 mb-4" alt="Profile Image">
+                <h4 class="font-weight-normal"><%= userDetail.username.toUpperCase() ?? '➖' %></h4>
+              <h5 class="font-weight-normal">
+                <%= userDetail.email ?? '➖' %>
+              </h5>
+              <p class="text-gray mb-4"><%= userDetail.firstName ?? '➖' %> <%= userDetail.lastName ?? '➖' %></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+</body>
+<script>
+
+</script>
+<%- include('include/nav_bar_main_script') %>
+</html>

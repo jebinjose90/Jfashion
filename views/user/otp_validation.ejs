@@ -1,0 +1,114 @@
+<%- include('include/nav_bar_auth') %>
+
+    <!-- Box at the Center -->
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 4em);">
+        <div class="box"
+            style="width: 23.5rem; height: 34.4rem; background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+            <div class="p-0">
+                <img src="/img/security-otp-one-time-password-smartphone-shield9904-104-removebg-preview-1.png"
+                    alt="Your Image" style="width: 5rem; height: 4rem; margin-left: 15px; margin-top: 4rem;"
+                    class="mb-4">
+                <% if (typeof message !=='undefined' && message !==null) { %>
+                    <div class="alert alert-danger text-center rounded-0 mt-1 mb-1 ms-2 me-2 fs-6">
+                        <%= message %>
+                    </div>
+                    <% } %>
+                        <h2 class="text-left fs-5 mt-2 mb-2 ms-4">Verify with OTP</h2>
+                        <form action="/otp_validation" method="POST" class="pt-3">
+                            <div class="input-container ms-4 me-4">
+                                <input type="text" class="form-control mb-4 rounded-0" placeholder="OTP"
+                                    style="font-size: 75%;" maxlength="4s" pattern="[0-9]{4}"
+                                    oninput="validateNumInput(this)" name="otp">
+
+                                </span>
+
+                                <div class="timer mb-0">
+                                    <p class="text-left text" style="font-size: 75%;">
+                                        Didn't receive OTP <button type="button" id="resend">Click to Resend</button>
+                                        <span class="time"></span>
+                                    </p>
+                                </div>
+
+
+                                <button type="submit" class="btn btn-primary w-100 rounded-0"
+                                    style="background-color: #6badeb; margin-top: 10px;">CONTINUE</button>
+                                <p class="text-left text mt-2" style="font-size: 75%;">
+                                    Have trouble logging in? <a href="#" class="gethelp-link">Get help</a>
+                                </p>
+
+                            </div>
+                        </form>
+
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <script>
+        function validateNumInput(input) {
+            // Remove non-digit characters from the input
+            input.value = input.value.replace(/\D/g, '');
+        }
+    </script>
+
+    <script>
+
+        function timer(n) {
+            document.getElementById("resend").disabled = true;
+            const interval = setInterval(() => {
+                if (n == 0) {
+                    clearInterval(interval);
+                    document.getElementById("resend").disabled = false;
+                }
+                document.querySelector(".time").innerHTML = n;
+                n = n - 1;
+            }, 1000);
+        }
+        timer(15);
+        document.getElementById("resend").onclick = function () {
+            timer(15);
+        };
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const resendButton = document.getElementById('resend');
+
+            if (resendButton) {
+                resendButton.addEventListener('click', function (event) {
+                    // Prevent default navigation behavior
+                    event.preventDefault();
+
+                    // Make an AJAX request to the server
+                    fetch('/resendOTP', {
+                        method: 'GET', // or 'POST' depending on your server-side logic
+                        headers: {
+                            'Content-Type': 'application/json'
+                            // Add any other headers if needed
+                        },
+                        // Add any body data if needed for POST requests
+                    })
+                        .then(response => {
+                            // Handle the response based on your server's behavior
+                            if (response.ok) {
+                                // Successful response, handle as needed
+                                console.log('OTP resent successfully');
+                            } else {
+                                // Handle error response
+                                console.error('Error resending OTP');
+                            }
+                        })
+                        .catch(error => {
+                            // Handle fetch error
+                            console.error('Fetch error:', error);
+                        });
+                });
+            }
+        });
+
+    </script>
+    <!-- Bootstrap JS (optional, for certain features like the responsive navbar toggle) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+
+    </html>

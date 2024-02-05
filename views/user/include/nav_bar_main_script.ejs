@@ -1,0 +1,28 @@
+<script>
+  // Initial setup: toggle visibility based on the initial count
+  window.onload = function () {
+    var badgeCountElement = document.getElementById("badgeCount");
+    var initialCount = parseInt(badgeCountElement.textContent, 10);
+
+    if (initialCount <= 0) {
+      badgeCountElement.style.display = 'none';
+    } else {
+      badgeCountElement.style.display = 'inline-block'; // or 'block' depending on your layout
+    }
+  };
+
+  function logout() {
+    const result = confirm('Are You Sure You Want to Logout?');
+    if (result == false) {
+      event.preventDefault();
+    }
+  }
+  function updateFormAction() {
+        // Get the search input value
+        var searchValue = document.getElementById('search').value;
+
+        // Update the form action with the search input value
+        document.forms[0].action = '/productsByCondition?search=' + encodeURIComponent(searchValue);
+    }
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

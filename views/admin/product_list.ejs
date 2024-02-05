@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    <%= title %>
+  </title>
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/admin_side_view.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+  
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .add_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .delete_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .edit_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    thead {
+      background-color: #c4c4c4;
+      /* Bootstrap light gray color */
+    }
+
+    .rounded-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      padding: 5px;
+      line-height: 1;
+    }
+
+    .center-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      /* Adjust as needed */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <%- include('include/admin_nav_bar_main') %>
+
+    <div class="custom-div">
+      <!-- Your content goes here -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>
+              <%= title %>
+            </h2>
+          </div>
+          <div class="col-md-6 text-right">
+            <button type="button" class="btn rounded-0" onclick="addProduct()" style="background-color: #C2B96C;">+ ADD
+              PRODUCT</button>
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-bottom: 1%;">
+          <table class="display" id="productTable">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">EDIT</th>
+                <th class="text-center" scope="col">DELETE</th>
+                <th class="text-center" scope="col">PRODUCT</th>
+                <th class="text-center" scope="col">BRAND</th>
+                <th class="text-center" scope="col">CATEGORY</th>
+                <th class="text-center" scope="col">SUBCATEGORY</th>
+                <th class="text-center" scope="col">STOCK</th>
+                <th class="text-center" scope="col">SKU</th>
+                <th class="text-center" scope="col">PRICE</th>
+                <th class="text-center" scope="col">QTY</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if(productDetails.length> 0) { %>
+                <% productDetails.forEach(function(productDetail, index) { %>
+                  <td class="text-center">
+                    <a href="/admin/edit_product/<%= productDetail._id %>"
+                      style="background-color: transparent; border: none;">
+                      <button type="button" class="btn btn-dark rounded-btn">
+                        <i class="fas fa-edit text-white"></i>
+                      </button>
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <a href="/admin/delete_product/<%= productDetail._id %>"
+                      style="background-color: transparent; border: none;" onclick="conform_delete()">
+                      <button type="button" class="btn btn-dark rounded-btn">
+                        <i class="fas fa-trash-alt"></i>
+                      </button>
+                    </a>
+                  </td>
+                  <td class="text-center">
+                    <div>
+                      <img src="<%= productDetail.image[0] %>" alt="Image Alt Text" width="60" height="60"
+                        style="margin-right: 10px;">
+                      <div>
+                        <span>
+                          <%= productDetail.product_name %>
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <%= productDetail.category_id.brand %>
+                  </td>
+                  <td class="text-center">
+                    <%= productDetail.category_id.category %>
+                  </td>
+                  <td class="text-center">
+                    <%= productDetail.category_id.sub_category %>
+                  </td>
+                  <td class="text-center">
+                    <% if (productDetail.stock_flag) { %>
+                      <i class="fas fa-check-circle text-success"></i>
+                      <% } else { %>
+                        <i class="fas fa-times-circle text-danger"></i>
+                        <% } %>
+                  </td>
+                  <td class="text-center">
+                    <%= productDetail.sku %>
+                  </td>
+                  <td class="text-center" style="white-space: nowrap;">
+                    <%= currency %>: <%= productDetail.price %>
+                  </td>
+                  <td class="text-center">
+                    <%= productDetail.stocks %>
+                  </td>
+                  </tr>
+                  <% }); %>
+                    <% }else { %>
+                      <tr>
+                          <td colspan="10" class="text-center">
+                              ➖
+                          </td>
+                      </tr>
+                  <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script>
+        function logout() {
+          const result = confirm('Are You Sure You Want to Logout?');
+          if (result == false) {
+            event.preventDefault();
+          }
+        }
+        function conform_delete() {
+          const result = confirm('Are You Sure You Want to Delete?');
+          if (result == false) {
+            event.preventDefault();
+          }
+        }
+        function dontAllowChar(input) {
+          // Remove non-digit characters from the input
+          input.value = input.value.replace(/\D/g, '');
+        }
+        function dontAllowCharAndSpace(input) {
+          // Remove non-digit characters from the input
+          input.value = input.value.trim();
+          input.value = input.value.replace(/\D/g, '');
+        }
+        function dontAllowSpace(input) {
+          // Remove non-digit characters from the input
+          input.value = input.value.trim();
+        }
+
+        function closeModal() {
+          // Reload the page when the close button is clicked
+          location.reload();
+        }
+
+        // Get the checkbox element
+        var stockCheckbox = document.getElementById('stock_flag');
+
+        // Check the initial state and set the value accordingly
+        var stockValue = stockCheckbox.checked ? 'on' : 'off';
+
+        // Attach an event listener to update the value when the checkbox is toggled
+        stockCheckbox.addEventListener('change', function () {
+          stockValue = this.checked ? 'on' : 'off';
+          console.log('stock_flag:', stockValue);
+        });
+
+        /**
+         * ADD PRODUCT
+        */
+        async function addProduct() {
+          window.location.href = "/admin/add_product";
+        }
+        // Get the checkbox element
+        var stockCheckbox = document.getElementById('stock_flag');
+
+        // Check the initial state and set the value accordingly
+        var stockValue = stockCheckbox.checked ? 'on' : 'off';
+
+        // Attach an event listener to update the value when the checkbox is toggled
+        stockCheckbox.addEventListener('change', function () {
+          stockValue = this.checked ? 'on' : 'off';
+          console.log('stock_flag:', stockValue);
+        });
+
+        /**
+         * EDIT PRODUCT
+        */
+        async function editProduct() {
+          try {
+            const formData = new FormData(document.getElementById('productEditForm'));
+            // Set the value in the FormData object
+            formData.set('stock_flag', stockValue);
+            // Make a fetch request to your backend endpoint
+            const response = await fetch('/admin/edit_product', {
+              method: 'POST',
+              body: formData,
+            });
+            const data = await response.json();
+            console.log('Data received:', data);
+
+            // Find the alert div
+            const alertDiv = document.querySelector('#edit-product .alert');
+            // Update the content and class of the response message
+            if (alertDiv) {
+              console.log("success");
+              alertDiv.innerHTML = data.message;
+              if (data.success === false) {
+                alertDiv.classList.add('alert-danger');
+              }
+            } else {
+              console.log("failed");
+            }
+
+            // Close the modal if the backend request was successful
+            if (data.success === true) {
+              // Trigger the click event on the close button
+              const closeButton = document.querySelector('#edit-product .close');
+              if (closeButton) {
+                closeButton.click();
+                location.reload();
+              }
+            } else {
+              console.log('SOMETHING WENT WRONG');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          // Add an event listener to the close button
+          const closeButton = document.querySelector('#add-product .close');
+          if (closeButton) {
+            closeButton.addEventListener('click', function () {
+              // Find the alert div
+              const alertDiv = document.querySelector('.alert');
+
+              // Reset the content and style of the alert div
+              if (alertDiv) {
+                alertDiv.innerHTML = '';
+              }
+            });
+          }
+
+          const editButton = document.querySelector('#edit-product .close');
+          if (editButton) {
+            editButton.addEventListener('click', function () {
+              // Find the alert div
+              const alertDiv = document.querySelector('.alert');
+
+              // Reset the content and style of the alert div
+              if (alertDiv) {
+                alertDiv.innerHTML = '';
+              }
+            });
+          }
+        });
+
+        /**
+         * DELETE PRODUCT
+        */
+        async function deleteProduct() {
+          try {
+            // Get the product_id from the hidden input field
+            const productId = document.querySelector('#deleteProductConfirmation').value;
+
+            // Create FormData and append product_id
+            const formData = new FormData();
+            formData.append('_id', productId);
+            // Make a fetch request to your backend endpoint
+            const response = await fetch('/admin/delete_product', {
+              method: 'POST',
+              body: formData,
+            });
+
+            const data = await response.json();
+            console.log('Data received:', data);
+
+            // Find the alert div
+            const alertDiv = document.querySelector('#delete-product .alert');
+
+            // Update the content and class of the response message
+            if (alertDiv) {
+              console.log("success");
+              alertDiv.innerHTML = data.message;
+              if (data.success === false) {
+                alertDiv.classList.add('alert-danger');
+              }
+            } else {
+              console.log("failed");
+            }
+
+            // Close the modal if the backend request was successful
+            if (data.success === true) {
+              // Trigger the click event on the close button
+              const closeButton = document.querySelector('#delete-product .close');
+              if (closeButton) {
+                closeButton.click();
+                location.reload();
+              }
+            } else {
+              console.log('SOMETHING WENT WRONG');
+            }
+          } catch (error) {
+            console.error('Error:', error);
+          }
+        }
+
+      </script>
+      <script>
+        $(document).ready(function () {
+          $('#productTable').DataTable({
+            columnDefs: [
+              { targets: [0, 1,2], orderable: false } // Disable sorting for the second and third columns (indexes are zero-based)
+            ]
+          });
+        });
+      </script>
+
+</body>
+
+</html>

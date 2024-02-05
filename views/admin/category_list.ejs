@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    <%= title %>
+  </title>
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/admin_side_view.css">
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+  <style>
+    body {
+
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    thead {
+      background-color: #c4c4c4;
+      /* Bootstrap light gray color */
+    }
+
+    .add_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <%- include('include/admin_nav_bar_main') %>
+
+    <div class="custom-div">
+      <!-- Your content goes here -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-6">
+            <h2>
+              <%= title %>
+            </h2>
+          </div>
+          <div class="col-md-6 text-right">
+            <button type="button" class="btn rounded-0" onclick="addCategory()" style="background-color: #C2B96C;">+ ADD
+              CATEGORY</button>
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-bottom: 1%;">
+          <table class="display" id="categoryTable">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">CATEGORY</th>
+                <th class="text-center" scope="col">CATEGORY ID</th>
+                <th class="text-center" scope="col">SUB CATEGORY</th>
+                <th class="text-center" scope="col">SUB CATEGORY ID</th>
+                <th class="text-center" scope="col">BRAND</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if(categoryDetails.length> 0) { %>
+                <% categoryDetails.forEach(function(categoryDetail, index) { %>
+                  <tr>
+                    <td class="text-center">
+                      <%= categoryDetail.category %>
+                    </td>
+                    <td class="text-center">
+                      <%= categoryDetail.category_id %>
+                    </td>
+                    <td class="text-center">
+                      <%= categoryDetail.sub_category %>
+                    </td>
+                    <td class="text-center">
+                      <%= categoryDetail.sub_category_id %>
+                    </td>
+                    <td class="text-center">
+                      <%= categoryDetail.brand %>
+                    </td>
+                  </tr>
+                  <% }); %>
+                    <% }else { %>
+                      <tr>
+                        <td colspan="5" class="text-center">
+                          ➖
+                        </td>
+                      </tr>
+                      <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script>
+        function logout() {
+          const result = confirm('Are You Sure You Want to Logout?');
+          if (result == false) {
+            event.preventDefault();
+          }
+        }
+        function dontAllowSpace(input) {
+          // Remove non-digit characters from the input
+          input.value = input.value.trim();
+        }
+        async function addCategory() {
+          window.location.href = "/admin/add_category";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+          // Add an event listener to the close button
+          const closeButton = document.querySelector('#add-category .close');
+          if (closeButton) {
+            closeButton.addEventListener('click', function () {
+              // Find the alert div
+              const alertDiv = document.querySelector('.alert');
+
+              // Reset the content and style of the alert div
+              if (alertDiv) {
+                alertDiv.innerHTML = '';
+              }
+            });
+          }
+        });
+
+      </script>
+      <script>
+        $(document).ready(function () {
+          $('#categoryTable').DataTable({
+            columnDefs: [
+              { targets: [0,2,3,4], orderable: false } // Disable sorting for the second and third columns (indexes are zero-based)
+            ]
+          });
+        });
+      </script>
+
+</body>
+
+</html>

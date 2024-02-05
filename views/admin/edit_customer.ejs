@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    <%= title %>
+  </title>
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/admin_side_view.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- Modal ADD PRODUCT-->
+  <div class="container d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 4em);"
+    id="add-product">
+    <div class="edit_user_div">
+      <% if(typeof message !=='undefined' && message !==null) { %>
+        <div class="alert alert-danger text-center rounded-0 mt-1 mb-1 ms-2 me-2 fs-6">
+          <%= message %>
+        </div>
+        <% } %>
+          <h5 class="modal-title" id="exampleModalLongTitle">EDIT USER STATUS</h5>
+          <form action="/admin/edit_customer" method="POST" class="pt-3 text-center">
+            <div class="center-div">
+              <label for="message" class="form-label" style="font-size: 20px; font-weight: bolder;">Give access?</label>
+            </div>
+            <!-- Add a hidden input field to store the index -->
+            <input type="hidden" id="user_id" name="user_id" value="<%= customerDetails._id %>">
+            <div class="form-check form-switch mb-6 rounded-0 d-flex align-items-center justify-content-start"
+              style="font-size: 75%; height: 50px;">
+              <label class="form-check-label " for="flexSwitchCheckChecked"
+                style="margin-left: 30px; font-size: 15px; font-weight: bold;">STATUS CHECK</label>
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="status"
+                style="width: 25px; height: 25px;" <%=customerDetails.status ? 'checked' : '' %>>
+            </div>
+            <button type="submit" style="background-color: #C2B96C; margin-top: 10px;">UPDATE
+              USER STATUS</button>
+          </form>
+    </div>
+  </div>
+
+
+
+</body>
+<script>
+  function logout() {
+    const result = confirm('Are You Sure You Want to Logout?');
+    if (result == false) {
+      event.preventDefault();
+    }
+  }
+
+  // Get the checkbox element
+  var statusCheckbox = document.getElementById('flexSwitchCheckChecked');
+
+  // Check the initial state and set the value accordingly
+  var statusValue = statusCheckbox.checked ? 'on' : 'off';
+
+  // Attach an event listener to update the value when the checkbox is toggled
+  statusCheckbox.addEventListener('change', function () {
+    statusValue = this.checked ? 'on' : 'off';
+    console.log('Status:', statusValue);
+  });
+
+  // Listen for the popstate event (triggered when the back or forward button is pressed)
+  window.addEventListener('popstate', function (event) {
+    // Redirect to /admin/product_list
+    window.location.href = '/admin/all_customers';
+  });
+
+  // Function to navigate to /admin/product_list when the page loads
+  function redirectToProductList() {
+    window.history.pushState(null, null, '/admin/all_customers');
+  }
+
+  // Call the function when the page loads
+  window.onload = redirectToProductList;
+</script>
+
+</html>

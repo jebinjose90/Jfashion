@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/user_side_view.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <style>
+    .custom-height {
+      height: 80vh;
+      /* 80% of the viewport height */
+    }
+  </style>
+  <title>
+    <%= title %>
+  </title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+
+    .inner-border-black {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+      border: 0.5px solid black;
+    }
+
+    .inner-border {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+    }
+
+    .user-avatar {
+      height: 10rem;
+      width: 10rem;
+      min-height: 10rem;
+      min-width: 10rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      border-radius: 50%;
+    }
+  </style>
+<%- include('include/nav_bar_main_style') %>
+</head>
+
+<body>
+  <%- include('include/nav_bar_main') %>
+
+
+    <!-- Modal ADD PRODUCT-->
+    <div class="container d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 4em);"
+      id="add-product">
+      <div class="edit_product_div">
+        <% if(typeof message !=='undefined' && message !==null) { %>
+          <div class="alert alert-danger text-center rounded-0 mt-1 mb-1 ms-2 me-2 fs-6">
+            <%= message %>
+          </div>
+          <% } %>
+            <h5 class="modal-title" id="exampleModalLongTitle">EDIT PROFILE</h5>
+            <form action="/editProfile" method="POST" class="pt-3 text-center">
+              <input type="hidden" id="_id" name="_id" value="<%= userDetail._id%>">
+              <input type="hidden" id="email" name="email" value="<%= userDetail.email%>">
+              <input type="text" class="form-control mb-4 rounded-0" placeholder="USERNAME"
+                value="<%= userDetail.username%>" oninput="dontAllowSpace(this)" style="font-size: 75%; width: 400px;"
+                name="username">
+              <input type="text" class="form-control mb-4 rounded-0" placeholder="EMAIL" value="<%= userDetail.email%>"
+                style="font-size: 75%;" name="email" disabled>
+              <input type="text" class="form-control mb-4 rounded-0" placeholder="FIRST NAME"
+                value="<%= userDetail.firstName%>" oninput="dontAllowSpace(this)" style="font-size: 75%;"
+                name="firstName">
+              <input type="text" class="form-control mb-4 rounded-0" placeholder="LAST NAME"
+                value="<%= userDetail.lastName%>" oninput="dontAllowSpace(this)" style="font-size: 75%;"
+                name="lastName">
+              <input type="text" class="form-control mb-4 rounded-0" placeholder="PHONE NUMBER"
+                value="<%= userDetail.phoneNumber%>" oninput="dontAllowCharAndSpace(this)" style="font-size: 75%;"
+                name="phoneNumber">
+              <select class="form-select form-control mb-4 rounded-0" style="font-size: 75%;" name="gender">
+                <option>MALE</option>
+                <option>FEMALE</option>
+              </select>
+              <button type="submit" style="background-color: #6badeb;">UPDATE PROFILE</button>
+            </form>
+      </div>
+    </div>
+
+</body>
+<script>
+  function dontAllowChar(input) {
+    // Remove non-digit characters from the input
+    input.value = input.value.replace(/\D/g, '');
+  }
+  function dontAllowCharAndSpace(input) {
+    // Remove non-digit characters from the input
+    input.value = input.value.trim();
+    input.value = input.value.replace(/\D/g, '');
+  }
+  function dontAllowSpace(input) {
+    // Remove non-digit characters from the input
+    input.value = input.value.trim();
+  }
+
+  // Listen for the popstate event (triggered when the back or forward button is pressed)
+  window.addEventListener('popstate', function (event) {
+    // Redirect to /admin/product_list
+    window.location.href = '/userProfile';
+  });
+
+  // Function to navigate to /admin/product_list when the page loads
+  function redirectToProductList() {
+    window.history.pushState(null, null, '/userProfile');
+  }
+
+  // Call the function when the page loads
+  window.onload = redirectToProductList;
+</script>
+<%- include('include/nav_bar_main_script') %>
+
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+   <!-- Style CSS -->
+   <link rel="stylesheet" href="/css/user_side_view.css">
+
+   <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+   <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+   <style>
+      .custom-height {
+         height: 80vh;
+         /* 80% of the viewport height */
+      }
+
+      .rounded-btn {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         border-radius: 50%;
+         width: 30px;
+         height: 30px;
+         font-size: 12px;
+         padding: 5px;
+         line-height: 1;
+      }
+
+      .btn-dark a {
+         color: white;
+         text-decoration: none;
+      }
+
+      .btn-dark a:hover {
+         text-decoration: none;
+         /* Remove underline on hover */
+      }
+
+      body {
+         margin: 0;
+         padding: 0;
+      }
+
+      .custom-div {
+         margin: 20px;
+         border: 1px solid black;
+         box-sizing: border-box;
+         /* Include border and padding in the total width and height */
+      }
+
+      .btn-dark a {
+         color: white;
+         text-decoration: none;
+      }
+
+      .btn-dark a:hover {
+         text-decoration: none;
+         /* Remove underline on hover */
+      }
+
+      .inner-border-black {
+         position: absolute;
+         top: 3%;
+         right: 3%;
+         bottom: 3%;
+         left: 3%;
+         border: 0.5px solid black;
+      }
+
+      .inner-border {
+         position: absolute;
+         top: 3%;
+         right: 3%;
+         bottom: 3%;
+         left: 3%;
+      }
+
+      .user-avatar {
+         height: 10rem;
+         width: 10rem;
+         min-height: 10rem;
+         min-width: 10rem;
+         color: #ffffff;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         font-weight: 600;
+         border-radius: 50%;
+      }
+
+      .status_circle {
+         width: 15px;
+         height: 15px;
+         border-radius: 50%;
+      }
+   </style>
+   </style>
+   <title>
+      <%= title %>
+   </title>
+   <%- include('include/nav_bar_main_style') %>
+</head>
+
+<body>
+   <%- include('include/nav_bar_main') %>
+
+
+      <div class="custom-div p-5">
+         <!-- Profile section -->
+         <div class="row mb-3">
+            <div class="col-md-6">
+               <h1>ORDER STATUS</h1>
+            </div>
+         </div>
+
+         <!-- Two additional divs -->
+         <div class="row justify-content-center">
+            <!-- First div with 60% width, 5px gap, and .5px gray border -->
+            <div class="col" style="background-color: #ffffff;">
+               <!-- Inner div for black border inside -->
+               <div class="table-responsive">
+                  <table class="table table-bordered justify-content-center">
+                     <thead>
+                        <tr>
+                           <th class="text-center" scope="col">CANCEL ORER</th>
+                           <th class="text-center" scope="col">IMAGE</th>
+                           <th class="text-center" scope="col">DEILVERY ADDRESS</th>
+                           <th class="text-center" scope="col">PRICE</th>
+                           <th class="text-center" scope="col">QUANTITY</th>
+                           <th class="text-center" scope="col">TOTAL PRICE</th>
+                           <th class="text-center" scope="col">STATUS</th>
+                           <th class="text-center" scope="col">ORDERED AT</th>
+                           <th class="text-center" scope="col">EXPECTED DELIVERY</th>
+                           <th class="text-center" scope="col">PAYMENT MODE</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <% if(userOrders.length> 0) { %>
+                           <% for (const order of userOrders) { %>
+                              <% for (const product of order.productcollection) { %>
+                                 <tr>
+                                    <td class="text-center">
+                                       <% if(product.status==="Canceled" ){ %>
+                                          <button type="button" class="btn btn-secondary rounded-btn" disabled>
+                                             <i class="fas fa-ban text-white"></i>
+                                          </button>
+                                          <%}else{ %>
+                                             <a href="/cancelOrder/?orderId=<%=order._id %>&productId=<%=product._id %>" onclick="cancelOrder()"
+                                                style="background-color: transparent; border: none;">
+                                                <button type="button" class="btn btn-secondary rounded-btn">
+                                                   <i class="fas fa-ban text-white"></i>
+                                                </button>
+                                             </a>
+                                             <%}%>
+                                    </td>
+                                    <td class="text-center">
+                                       <div>
+                                          <img src="<%= product.image[0] %>" alt="Image Alt Text" width="60" height="60"
+                                             style="margin-right: 10px;">
+                                          <div>
+                                             <span>
+                                                <%= product.product_name %>
+                                             </span>
+                                          </div>
+                                       </div>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= order.address.address %>,<br>
+                                          <%= order.address.street %>,<%= order.address.city %>,<br>
+                                                <%= order.address.state %> PIN:<%= order.address.pin %>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= product.price %>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= product.quantity %>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= product.product_total_price %>
+                                    </td>
+                                    <td class="text-center">
+                                       <div
+                                          style="display: flex; align-items: center; justify-content: center; color: <%= product.status_color %>;">
+                                          <div class="status_circle"
+                                             style="margin-right: 5px; background-color: <%= product.status_color %>;">
+                                          </div>
+                                          <%= product.status %>
+                                       </div>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= formatDate(order.order_date) %><br>
+                                          <%= formatTime(order.order_date) %>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= formatDate(order.delivery_date) %><br>
+                                          <%= formatTime(order.delivery_date) %>
+                                    </td>
+                                    <td class="text-center">
+                                       <%= order.payment_mode %>
+                                    </td>
+                                 </tr>
+                                 <% }; %>
+                                    <% } }else { %>
+                                       <tr>
+                                          <td colspan="10" class="text-center">
+                                             ➖
+                                          </td>
+                                       </tr>
+                                       <% } %>
+                     </tbody>
+                  </table>
+               </div>
+                  <% function formatDate(dateTimeString) { %>
+                     <% const parsedDateTime=new Date(dateTimeString); %>
+                        <% const
+                           formattedDate=`${parsedDateTime.getDate()}/${parsedDateTime.getMonth()+1}/${parsedDateTime.getFullYear()}`;
+                           %>
+                           <% return `${formattedDate}`; %>
+                              <% } %>
+                                 <% function formatTime(dateTimeString) { %>
+                                    <% const parsedDateTime=new Date(dateTimeString); %>
+                                       <% const options={ hour: '2-digit' , minute: '2-digit' , hour12: true }; %>
+                                          <% const formattedTime=parsedDateTime.toLocaleTimeString('en-US', options); %>
+                                             <% return `${formattedTime}`; %>
+                                                <% } %>
+               </div>
+            </div>
+         </div>
+
+</body>
+<script>
+
+   async function addAddress() {
+      window.location.href = "/addAddress";
+   }
+
+   function cancelOrder() {
+      const result = confirm('Are You Sure You Want to Cancel This Order?');
+      if (result == false) {
+         event.preventDefault();
+      }
+   }
+</script>
+<%- include('include/nav_bar_main_script') %>
+
+</html>

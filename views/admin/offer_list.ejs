@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>
+    <%= title %>
+  </title>
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/admin_side_view.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/jquery.dataTables.css" />
+  <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.js"></script>
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .add_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .delete_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .edit_product_div {
+      margin: 20px;
+      border: 1px solid black;
+      padding: 20px;
+      /* Add padding to give space inside */
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    thead {
+      background-color: #c4c4c4;
+      /* Bootstrap light gray color */
+    }
+
+    .rounded-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      padding: 5px;
+      line-height: 1;
+    }
+
+    .center-div {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      /* Adjust as needed */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <%- include('include/admin_nav_bar_main') %>
+
+    <div class="custom-div ">
+      <!-- Your content goes here -->
+      <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-4">
+            <h2>
+              <%= title %>
+            </h2>
+          </div>
+          <div class="col-md-4 text-right">
+            <button type="button" class="btn rounded-0" onclick="addProductOffer()" style="background-color: #C2B96C;">+ ADD
+              PRODUCT OFFER</button>
+          </div>
+          <div class="col-md-4 text-right">
+            <button type="button" class="btn rounded-0" onclick="addCategoryOffer()" style="background-color: #C2B96C;">+ ADD
+              CATEGORY OFFER</button>
+          </div>
+        </div>
+        <div class="table-responsive" style="margin-bottom: 1%;">
+          <table class="display" id="offerTable">
+            <thead>
+                <tr>
+                    <th class="text-center" scope="col">EDIT</th>
+                    <th class="text-center" scope="col">DELETE</th>
+                    <th class="text-center" scope="col">NO</th>
+                    <th class="text-center" scope="col">APPLICABLE PRODUCT</th>
+                    <th class="text-center" scope="col">APPLICABLE CATEGORY</th>
+                    <th class="text-center" scope="col">EXPIRE DATE</th>
+                    <th class="text-center" scope="col">DISCOUNT</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if(offerCollections.length > 0) { %>
+                    <% offerCollections.forEach(function(offerCollection, index) { %>
+                        <tr>
+                            <td class="text-center">
+                                <% if (offerCollection.applicable_product) { %>
+                                    <a href="/admin/edit_product_offer/<%= offerCollection._id %>"
+                                        style="background-color: transparent; border: none;">
+                                        <button type="button" class="btn btn-dark rounded-btn">
+                                            <i class="fas fa-edit text-white"></i>
+                                        </button>
+                                    </a>
+                                <% } else if (offerCollection.applicable_category) { %>
+                                    <a href="/admin/edit_category_offer/<%= offerCollection._id %>"
+                                        style="background-color: transparent; border: none;">
+                                        <button type="button" class="btn btn-dark rounded-btn">
+                                            <i class="fas fa-edit text-white"></i>
+                                        </button>
+                                    </a>
+                                <% } %>
+                            </td>
+                            <td class="text-center">
+                                <a href="/admin/delete_offer/<%= offerCollection._id %>"
+                                    style="background-color: transparent; border: none;" onclick="confirm_delete()">
+                                    <button type="button" class="btn btn-dark rounded-btn">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </button>
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <%= index + 1 %>
+                            </td>
+                            <td class="text-center">
+                              <%= offerCollection.applicable_product ? offerCollection.applicable_product : '➖' %>
+                            </td>
+                            <td class="text-center">
+                                <%= offerCollection.applicable_category ? offerCollection.applicable_category : '➖' %>
+                            </td>
+                            <td class="text-center">
+                                <%= offerCollection.expire_date.toLocaleDateString('en-US') %>
+                            </td>
+                            <td class="text-center">
+                                <%= offerCollection.discount %>%
+                            </td>
+                        </tr>
+                    <% }); %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="7" class="text-center">
+                            ➖
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+        
+        </div>
+      </div>
+    </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <script>
+        function logout() {
+          const result = confirm('Are You Sure You Want to Logout?');
+          if (result == false) {
+            event.preventDefault();
+          }
+        }
+        function confirm_delete() {
+          const result = confirm('Are You Sure You Want to Delete?');
+          if (result == false) {
+            event.preventDefault();
+          }
+        }
+
+        async function addProductOffer() {
+          window.location.href = "/admin/add_product_offer";
+        }
+
+        async function addCategoryOffer() {
+          window.location.href = "/admin/add_category_offer";
+        }
+
+      </script>
+      <script>
+        $(document).ready(function () {
+          $('#offerTable').DataTable({
+            columnDefs: [
+              { targets: [0,1,3,4], orderable: false } // Disable sorting for the second and third columns (indexes are zero-based)
+            ]
+          });
+        });
+      </script>
+
+</body>
+
+</html>

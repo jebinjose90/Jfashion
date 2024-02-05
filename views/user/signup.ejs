@@ -1,0 +1,58 @@
+<%- include('include/nav_bar_auth') %>
+
+  <!-- Box at the Center -->
+  <div class="container d-flex align-items-center justify-content-center" style="min-height: calc(100vh - 2em);">
+    <div class="box" style="background-color: #fff; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); min-height: 34.4rem;">
+      <div class="p-0">
+        <img src="/img/cjxeizzvaaahehm-1-jFj.png" alt="Your Image" style="width: 100%; height: 13.4rem;" class="mb-2">
+        <% if (typeof message !=='undefined' && message !==null) { %>
+          <div class="alert alert-danger text-center rounded-0 mt-1 mb-1 ms-2 me-2 fs-6">
+            <%= message %>
+          </div>
+          <% } %>
+
+            <h2 class="text-left fs-5 mt-2 mb-2 ms-4">SIGNUP</h2>
+            <!-- Input Fields in a Div with Reduced Width -->
+            <form action="/signup" method="POST" class="pt-3">
+              <div class="input-container ms-4 me-4">
+                <input type="text" class="form-control mb-2 rounded-0" placeholder="USERNAME" style="font-size: 75%;"
+                  oninput="dontAllowSpace(this)" name="username">
+                <input type="email" class="form-control mb-2 rounded-0" placeholder="EMAIL" style="font-size: 75%;"
+                  aria-describedby="emailHelp" oninput="dontAllowSpace(this)" name="email">
+                <input type="password" class="form-control mb-2 rounded-0" placeholder="PASSWORD"
+                  style="font-size: 75%;" maxlength="6" oninput="dontAllowSpace(this)" name="password">
+                <input type="text" class="form-control mb-2 rounded-0" placeholder="+91 | MOBILE NUMBER"
+                  style="font-size: 75%;" maxlength="10" pattern="[0-9]{10}" oninput="validateNumInput(this)"
+                  name="phoneNumber">
+                <input type="text" class="form-control mb-2 rounded-0" placeholder="REFERRAL CODE" style="font-size: 75%;"
+                  oninput="dontAllowSpace(this)" name="referralcode">
+                <!-- Additional Sentences -->
+                <p class="text-left text mt-2" style="font-size: 75%;">By continuing I agree to the <span
+                    class="text-highlight">Terms of Use & Privacy Policy</span></p>
+                <!-- Submit Button -->
+                <button class="btn btn-primary w-100 rounded-0" style="background-color: #6badeb;">CONTINUE</button>
+                <p class="text-left text mt-2" style="font-size: 75%;">
+                  Have trouble logging in? <a href="#" class="gethelp-link">Get help</a>
+                </p>
+              </div>
+            </form>
+            <script>
+              function validateNumInput(input) {
+                // Remove non-digit characters from the input
+                input.value = input.value.replace(/\D/g, '');
+              }
+              function dontAllowSpace(input) {
+                // Remove non-digit characters from the input
+                input.value = input.value.trim();;
+              }
+            </script>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS (optional, for certain features like the responsive navbar toggle) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+
+  </html>

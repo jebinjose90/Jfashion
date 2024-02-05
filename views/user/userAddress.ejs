@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+  <!-- Style CSS -->
+  <link rel="stylesheet" href="/css/user_side_view.css">
+
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <style>
+    .custom-height {
+      height: 80vh;
+      /* 80% of the viewport height */
+    }
+
+    .rounded-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      font-size: 12px;
+      padding: 5px;
+      line-height: 1;
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    .custom-div {
+      margin: 20px;
+      border: 1px solid black;
+      box-sizing: border-box;
+      /* Include border and padding in the total width and height */
+    }
+
+    .btn-dark a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .btn-dark a:hover {
+      text-decoration: none;
+      /* Remove underline on hover */
+    }
+
+    .inner-border-black {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+      border: 0.5px solid black;
+    }
+
+    .inner-border {
+      position: absolute;
+      top: 3%;
+      right: 3%;
+      bottom: 3%;
+      left: 3%;
+    }
+
+    .user-avatar {
+      height: 10rem;
+      width: 10rem;
+      min-height: 10rem;
+      min-width: 10rem;
+      color: #ffffff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 600;
+      border-radius: 50%;
+    }
+  </style>
+  <title>
+    <%= title %>
+  </title>
+  <%- include('include/nav_bar_main_style') %>
+</head>
+
+<body>
+  <%- include('include/nav_bar_main') %>
+
+
+    <div class="custom-div p-5">
+      <!-- Profile section -->
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <h1><%= title %></h1>
+        </div>
+        <div class="col-md-6 text-md-right">
+          <button type="button" class="btn rounded-0" onclick="addAddress()" style="background-color: #6badeb;">+ ADD
+            ADDRESS</button>
+        </div>
+      </div>
+
+      <!-- Two additional divs -->
+      <div class="row justify-content-center">
+        <!-- First div with 60% width, 5px gap, and .5px gray border -->
+        <div class="col-md-7 mb-3 custom-height position-relative" style="background-color: #ffffff;">
+          <!-- Inner div for black border inside -->
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col">EDIT</th>
+                  <th class="text-center" scope="col">DELETE</th>
+                  <th class="text-center" scope="col">ADDRESS</th>
+                  <th class="text-center" scope="col">STREET</th>
+                  <th class="text-center" scope="col">CITY</th>
+                  <th class="text-center" scope="col">STATE</th>
+                  <th class="text-center" scope="col">PINCODE</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if(addressCollections.length> 0) { %>
+                  <% addressCollections.forEach(function(addressCollection, index) { %>
+                    <tr>
+                      <td class="text-center">
+                        <a href="/editAddress/<%= addressCollection._id %>"
+                          style="background-color: transparent; border: none;" onclick="edit_address()">
+                          <button type="button" class="btn btn-dark rounded-btn">
+                            <i class="fas fa-edit"></i>
+                          </button>
+                        </a>
+                      </td>
+                      <td class="text-center">
+                        <a href="/deleteAddress/<%= addressCollection._id %>"
+                          style="background-color: transparent; border: none;" onclick="conform_delete()">
+                          <button type="button" class="btn btn-dark rounded-btn">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                        </a>
+                      </td>
+                      <td class="text-center">
+                        <%= addressCollection.address %>
+                      </td>
+                      <td class="text-center">
+                        <%= addressCollection.street %>
+                      </td>
+                      <td class="text-center">
+                        <%= addressCollection.city %>
+                      </td>
+                      <td class="text-center">
+                        <%= addressCollection.state %>
+                      </td>
+                      <td class="text-center">
+                        <%= addressCollection.pin %>
+                      </td>
+                    </tr>
+                    <% }); %>
+                      <% } else { %>
+                        <tr>
+                          <td colspan="7" class="text-center">
+                            ➖
+                          </td>
+                        </tr>
+                        <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+</body>
+<script>
+
+  async function addAddress() {
+    window.location.href = "/addAddress";
+  }
+
+  function conform_delete() {
+    const result = confirm('Are You Sure You Want to Delete?');
+    if (result == false) {
+      event.preventDefault();
+    }
+  }
+</script>
+<%- include('include/nav_bar_main_script') %>
+
+</html>

@@ -1,0 +1,154 @@
+<main>
+  <article>
+    <!-- <p>This page demo the Bootstrap 4 responsive dahboard sidebar menu.</p> -->
+
+    <!-- Sidebar Menu HTML -->
+    <div class="page-wrapper chiller-theme">
+      <a id="show-sidebar" class="btn btn-sm btn-light" href="#">
+        <i class="fas fa-bars"></i>
+      </a>
+      <nav id="sidebar" class="sidebar-wrapper">
+        <div class="sidebar-content">
+          <div class="sidebar-brand">
+            <!-- <a href="#">pro sidebar</a> -->
+            <div id="close-sidebar">
+              <i class="fas fa-times"></i>
+            </div>
+          </div>
+          <div class="sidebar-header">
+            <div class="user-pic">
+              <i class="fa fa-user"></i>
+            </div>
+            <div class="user-info">
+              <span class="user-name">
+                <strong>ADMIN</strong>
+              </span>
+              <span class="user-role">Administrator</span>
+            </div>
+          </div>
+
+          <div class="sidebar-menu">
+            <ul>
+              <li class="header-menu">
+                <span>General</span>
+              </li>
+              <li class="sidebar">
+                <a href="/admin/dashboard">
+                  <span>DASHBOARD</span>
+                </a>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <span>PRODUCTS</span>
+                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="/admin/category_list">Category List
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/admin/product_list">Product List
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <span>ORDERS</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="/admin/order_list">Order list</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <span>CUSTOMERS</span>
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="/admin/all_customers">All Customers</a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+              <li class="sidebar-dropdown">
+                <a href="#">
+                  <span>SCHEMES</span>
+                  <!-- <span class="badge badge-pill badge-danger">3</span> -->
+                </a>
+                <div class="sidebar-submenu">
+                  <ul>
+                    <li>
+                      <a href="/admin/coupon_list">Coupon
+                      </a>
+                    </li>
+                    <li>
+                      <a href="/admin/offer_list">Offers
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!-- sidebar-menu  -->
+        </div>
+
+      </nav>
+    </div>
+    <!-- sidebar-wrapper  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"></script>
+    <!-- End Sidebar Menu HTML -->
+  </article>
+</main>
+
+<script>
+  jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function () {
+      $(".sidebar-submenu").slideUp(200);
+      if (
+        $(this)
+          .parent()
+          .hasClass("active")
+      ) {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .parent()
+          .removeClass("active");
+      } else {
+        $(".sidebar-dropdown").removeClass("active");
+        $(this)
+          .next(".sidebar-submenu")
+          .slideDown(200);
+        $(this)
+          .parent()
+          .addClass("active");
+      }
+    });
+
+    $("#close-sidebar").click(function () {
+      $(".page-wrapper").removeClass("toggled");
+    });
+    $("#show-sidebar").click(function () {
+      $(".page-wrapper").addClass("toggled");
+    });
+  });
+
+  $(document).ready(function () {
+    $(".page-wrapper").removeClass("toggled");
+  });
+</script>

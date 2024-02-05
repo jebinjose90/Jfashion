@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand">
+      <img src="/img/company_logo.png" alt="Your Logo" height="50">
+  </a>
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <a class="nav-link" href="/admin/dashboard">DASHBOARD</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          PRODUCTS
+        </a>
+        <div class="dropdown-menu" style=" width: 60px; left: auto;" aria-labelledby="navbarDropdown" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/category_list">Category List</a>
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/product_list">Product List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          ORDERS
+        </a>
+        <div class="dropdown-menu" style=" width: 60px; left: auto;" aria-labelledby="navbarDropdown" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/order_list">Order List</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          CUSTOMERS
+        </a>
+        <div class="dropdown-menu" style=" width: 60px; left: auto;" aria-labelledby="navbarDropdown" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/all_customers">All Customers</a>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown"
+          aria-haspopup="true" aria-expanded="false">
+          SCHEMES
+        </a>
+        <div class="dropdown-menu" style=" width: 60px; left: auto;" aria-labelledby="navbarDropdown" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/coupon_list">Coupon</a>
+          <a class="dropdown-item" style=" font-size: 80%;" href="/admin/offer_list">Offers</a>
+        </div>
+      </li>
+    </ul>
+
+    <!-- Add an empty flex-grow-1 div to push the logout button to the right -->
+    <div class="flex-grow-1"></div>
+
+    <ul class="navbar-nav">
+      <li class="nav-item">
+        <button class="btn btn-dark">
+          <a href="/admin/admin_Logout" onclick="logout()" style="color: white; text-decoration: none;">Logout</a>
+        </button>
+      </li>
+    </ul>
+
+  </div>
+</nav>
